@@ -1,0 +1,51 @@
+---
+title: "Story_6_pitch"
+author: "Declan Oberlies"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(readr)
+
+```
+
+# “Water is life”
+
+For my final data story, I will be looking at SDG 6: Ensure availability and sustainable management of water and sanitation for all. 
+
+First I will use this [data set](https://ourworldindata.org/grapher/proportion-using-safely-managed-drinking-water?time=2001..2024) to find what countries are most burdened by unsafe drinking water. I will then look at the disparities between urban and rural water from [this dataset](https://ourworldindata.org/grapher/urban-vs-rural-safely-managed-drinking-water-source?time=2024)
+```{r}
+# load data ----
+url <- "https://ourworldindata.org/grapher/urban-vs-rural-safely-managed-drinking-water-source.csv?v=1&csvType=full&useColumnShortNames=true"
+UR <- read.csv(url)
+
+# modify data ----
+UR <- UR %>% 
+  mutate(RvU_deficite = wat_sm__residence_rural - wat_sm__residence_urban)
+
+# plot data ----
+UR <- UR %>% 
+  filter(entity == "World")
+ggplot(UR,
+       aes(x = year,
+           y = RvU_deficite)) +
+  geom_line() +
+  scale_y_reverse()
+
+```
+from this preliminary graph, we can see that the 
+
+I will then use some of them many data sets from [here](https://ourworldindata.org/water-use-stress) to examine how freshwater is distributed within countries. 
+```{r}
+
+```
+
+I hypothesize that there will be situations where one country has limited water to clench the thrust of their people but uses lots of water for agriculture or industry. If this is the case then I will explore the dilemma. People need to eat and have jobs from industry but also need clean water. I think it will be interesting to see how different countries ballence this.
+
+# more stuff if I have time
+I would like to look at ground water vs surface water data, but have not yet found a good dataset for that. I also want to look at deaths from unsafe/lack of water from [this dataset](https://ourworldindata.org/grapher/share-deaths-unsafe-water) but I’m unable to download the data. Do you perhaps know a workaround?
+
