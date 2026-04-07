@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(ggplot2)
 library(dplyr)
 library(readr)
-
+library(plotly)
 ```
 
 # “Water is life”
@@ -42,11 +42,33 @@ From this preliminary graph(fig.1), we can see that the difference in water qual
 
 I will then use some of them many data sets from [here](https://ourworldindata.org/water-use-stress) to examine how freshwater is distributed within countries. 
 ```{r}
+# load data ----
+url <- "https://ourworldindata.org/grapher/freshwater-withdrawals-as-a-share-of-internal-resources.csv?v=1&csvType=full&useColumnShortNames=true"
+withdrawSus <- read.csv(url)
+# modify data ----
+withdrawSus <-
+  withdrawSus %>%
+  rename(`sustainable withdraws` = X_6_4_2__er_h2o_stress__no_breakdown)
 
+# plot data ----
+ggplotly(
+  ggplot(withdrawSus,
+       aes(x = entity,
+           y = `sustainable withdraws`,
+           group = entity)) +
+  geom_point(size = .5) +
+    labs(title = "Fig.2")
+  
+  # +
+  # geom_boxplot()
+  )
 ```
+This preliminary graph (Fig.2) shows the percentage of fresh water that countries can withdraw sustainably that they are withdrawing. Interestingly, countries like Kuwait are able to withdraw over 100% because they use desalination plants. This is a data story that I will explore more, and there are many more great data stories to be discovered from this dataset. 
 
-I hypothesize that there will be situations where one country has limited water to clench the thrust of their people but uses lots of water for agriculture or industry. If this is the case then I will explore the dilemma. People need to eat and have jobs from industry but also need clean water. I think it will be interesting to see how different countries ballence this.
+
+I hypothesize that there will be situations where one country has limited water to clench the thrust of their people but uses lots of water for agriculture or industry. If this is the case then I will explore the dilemma. People need to eat and have jobs from industry but also need clean water. I think it will be interesting to see how different countries balance this.
 
 # more stuff if I have time
-I would like to look at ground water vs surface water data, but have not yet found a good dataset for that. I also want to look at deaths from unsafe/lack of water from [this dataset](https://ourworldindata.org/grapher/share-deaths-unsafe-water) but I’m unable to download the data. Do you perhaps know a workaround?
+I would like to look at ground water vs surface water data, but have not yet found a good dataset for that. I also want to look at deaths from unsafe/lack of water from [this dataset](https://ourworldindata.org/grapher/share-deaths-unsafe-water) but struggling to download the data. If I get it figured out then I will include it.
+
 
