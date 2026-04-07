@@ -34,10 +34,11 @@ ggplot(UR,
        aes(x = year,
            y = RvU_deficite)) +
   geom_line() +
-  scale_y_reverse()
+  scale_y_reverse() +
+  labs(title = "Fig.1")
 
 ```
-from this preliminary graph, we can see that the 
+From this preliminary graph(fig.1), we can see that the difference in water quality/availability between urban and rural populations has decreased significantly in recent years, and trends towards equality. This is one data story that I will explore more in depth for specific countries.
 
 I will then use some of them many data sets from [here](https://ourworldindata.org/water-use-stress) to examine how freshwater is distributed within countries. 
 ```{r}
